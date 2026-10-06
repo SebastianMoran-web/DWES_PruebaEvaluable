@@ -3,11 +3,11 @@ import java.util.ArrayList;
 
 public class GestorTickets {
 
-    ArrayList<Ticket> tickets = new ArrayList<>();
+    private ArrayList<Ticket> tickets = new ArrayList<>();
 
     private int idSiguiente = 1;
 
-    private Ticket encontrarId(int idBuscado) {
+    public Ticket encontrarId(int idBuscado) {
 
         for (Ticket ticket : tickets) {
 
@@ -15,19 +15,15 @@ public class GestorTickets {
 
                 return ticket;
 
-                }
             }
+        }
         return null;
     }
 
 
-
-
-
-
     public void crearTickets(String descripcion) {
 
-        try{
+        try {
 
             Ticket nuevoTicket = new Ticket(idSiguiente, descripcion, false);
 
@@ -44,8 +40,36 @@ public class GestorTickets {
     }
 
     public ArrayList<Ticket> getTickets() {
+
         return new ArrayList<>(tickets);
     }
+
+    public int getTotalTickets() {
+
+        return tickets.size();
+    }
+
+    public int getTicketsCerrados() {
+
+        int contador = 0;
+
+        for (Ticket ticket : tickets) {
+
+            if (ticket.estaCerrado() == true) {
+
+                contador++;
+            }
+        } return contador;
+    }
+
+    public int getTicketsAbiertos () {
+
+        return getTotalTickets() - getTicketsCerrados();
+    }
+
+
+
+
 
 
 
