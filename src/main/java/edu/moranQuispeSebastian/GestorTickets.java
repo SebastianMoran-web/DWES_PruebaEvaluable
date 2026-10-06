@@ -66,7 +66,14 @@ public class GestorTickets {
 
         return getTotalTickets() - getTicketsCerrados();
     }
-
+    public void guardarDatos(ArrayList<Ticket> recuperados) {
+        this.tickets = recuperados;
+        for (Ticket ticket : tickets) {
+            if (ticket.getId() >= idSiguiente) {
+                idSiguiente = ticket.getId() + 1;
+            }
+        }
+    }
 
 
 
