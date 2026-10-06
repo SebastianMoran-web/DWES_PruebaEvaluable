@@ -61,7 +61,7 @@ public class AplicacionHelpDesk {
             case 4 -> cerrarIncidencia();
             case 5 -> mostratEstadisticas();
             case 6 -> guardarDatos();
-            case 0 -> System.out.println("Cerrando HelpDesk....");
+            case 0 -> System.out.println("Cerrando HelpDesk.... Recuerda que los cambios no guardados se perderán");
             default -> System.out.println("Error:Opción no valida");
         }
 
@@ -70,7 +70,13 @@ public class AplicacionHelpDesk {
     private static void crearIncidencia() {
         System.out.println("Introduce la descripcion de la incidencia");
         String descripcion = teclado.nextLine();
-        gestor.crearTickets(descripcion);
+
+        try {
+            gestor.crearTickets(descripcion);
+            System.out.println("Ticket guardado");
+        } catch (IllegalArgumentException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
     }
 
     private static void listaIncidencias() {
@@ -104,7 +110,9 @@ public class AplicacionHelpDesk {
             Ticket ticket = gestor.encontrarId(id);
             if (ticket == null) {
                 System.out.println("No se encontró la incidencia");
-            }else{
+            }else if (ticket.estaCerrado()) {
+                System.out.println("La Incidencia ya esta cerrada");
+            }else {
                 ticket.cerrar();
                 System.out.println("Operación realizada");
             }
@@ -127,7 +135,7 @@ public class AplicacionHelpDesk {
     }
 
     private static int leerId() {
-        while(!teclado.hasNextLine()) {
+        while(!teclado.hasNextInt()) {
             System.out.println("Dato no valido. Introduce un ID valido");
             teclado.nextLine();
         }

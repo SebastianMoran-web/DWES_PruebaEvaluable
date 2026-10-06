@@ -2,13 +2,13 @@ package edu.moranQuispeSebastian;
 
 public class Ticket {
 
-    private int id;
-    private String descripcion;
+    private final int id;
+    private final String descripcion;
     private boolean cerrado;
 
     public Ticket(int id, String descripcion, boolean cerrado) {
         if (id <= 0) {
-            throw new IllegalArgumentException("Error: el identificador no puede ser negativo");
+            throw new IllegalArgumentException("Error: el identificador debe ser positivo");
         }
 
         if (descripcion == null || descripcion.isBlank()) {
@@ -20,13 +20,7 @@ public class Ticket {
     }
 
     public void cerrar() {
-
-        if (cerrado == false) {
-            cerrado = true;
-        } else {
-            System.out.println("El ticket ya esta cerrado");
-        }
-
+         cerrado = true;
     }
 
     public boolean estaCerrado() {

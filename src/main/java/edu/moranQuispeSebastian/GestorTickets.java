@@ -22,21 +22,9 @@ public class GestorTickets {
 
 
     public void crearTickets(String descripcion) {
-
-        try {
-
-            Ticket nuevoTicket = new Ticket(idSiguiente, descripcion, false);
-
-            tickets.add(nuevoTicket);
-            idSiguiente++;
-
-            System.out.println("Ticket guardado");
-
-        } catch (Exception e) {
-
-            System.out.println(e.getMessage());
-        }
-
+        Ticket nuevoTicket = new Ticket(idSiguiente, descripcion, false);
+        tickets.add(nuevoTicket);
+        idSiguiente++;
     }
 
     public ArrayList<Ticket> getTickets() {
@@ -55,7 +43,7 @@ public class GestorTickets {
 
         for (Ticket ticket : tickets) {
 
-            if (ticket.estaCerrado() == true) {
+            if (ticket.estaCerrado()) {
 
                 contador++;
             }
@@ -67,7 +55,7 @@ public class GestorTickets {
         return getTotalTickets() - getTicketsCerrados();
     }
     public void guardarDatos(ArrayList<Ticket> recuperados) {
-        this.tickets = recuperados;
+        this.tickets = (recuperados != null) ? recuperados : new ArrayList<>();
         for (Ticket ticket : tickets) {
             if (ticket.getId() >= idSiguiente) {
                 idSiguiente = ticket.getId() + 1;

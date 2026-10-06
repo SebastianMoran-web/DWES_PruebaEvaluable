@@ -36,11 +36,11 @@ public class ArchivoTickets {
         try {
             lineas = Files.readAllLines(ruta, StandardCharsets.UTF_8);
         } catch (NoSuchFileException e) {
-
             return new ArrayList<>();
         }
 
         ArrayList<Ticket> recuperados = new ArrayList<>();
+        java.util.Set<Integer> idsVistos = new java.util.HashSet<>();
 
         for (int i = 0; i < lineas.size(); i++) {
             String linea = lineas.get(i);
@@ -55,6 +55,10 @@ public class ArchivoTickets {
             try {
                 int id = Integer.parseInt(partes[0]);
 
+                if (!idsVistos.add(id)) {
+                    throw new IllegalArgumentException("Identificador repetido: " + id);
+                }
+
                 if (!partes[1].equals("true") && !partes[1].equals("false")) {
                     throw new IllegalArgumentException("El estado debe ser true o false.");
                 }
@@ -63,20 +67,15 @@ public class ArchivoTickets {
                 String descripcion = partes[2];
 
                 Ticket ticket = new Ticket(id, descripcion, cerrado);
-
                 recuperados.add(ticket);
 
             } catch (IllegalArgumentException e) {
-
                 throw new IOException("Línea " + numeroLinea + ": " + e.getMessage(), e);
             }
         }
 
         return recuperados;
-
-
     }
-
 
 
 }
