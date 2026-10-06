@@ -15,4 +15,8 @@ class GestorTicketTest {
 
         assertEquals(1, gestor.getTotalTickets());
     }
+
+    @Test
+    void
+
 }
